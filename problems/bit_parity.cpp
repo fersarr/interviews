@@ -4,6 +4,8 @@ using namespace std;
 
 //check if the given number has bit parity.
 
+//time complexity o(s) where s is number of set bits
+
 #define TESTS 12
 
 int main()
@@ -17,7 +19,7 @@ int main()
 		bitCount=0;
 		curr=numbers[i];
 		while(curr!=0){
-			lowestSetBit=curr & (~(curr-1)); //get lowest set bit in curr			
+			lowestSetBit=curr & (~(curr-1)); //get lowest set bit in curr. WORKS FOR NEGATIVE			
 			if(curr!=0)
 				bitCount++;
 				

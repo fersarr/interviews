@@ -1,6 +1,9 @@
 #include <iostream>
 #include <memory>
+#include <stack>
 using namespace std;
+
+//Traverse the tree (preorder) without recursion
 
 template<class T>
 struct node{
@@ -14,49 +17,9 @@ struct node{
 
 };
 
-template<class T>
-void insert(shared_ptr<node<T>> &root,int value){
-	shared_ptr<node<T>> curr=root,previous;
-	
-	bool left=true;
-	
-	while(curr!=nullptr){
-		previous=curr;
-		cout<<"curr value: "<<curr->value<<endl;
-		if(value<=curr->value){ //go left
-			curr=curr->left;
-			left=true;
-		}
-		else{
-			curr=curr->right;
-			left=false;
-		}
-	}
-
-	if(curr==nullptr){ //here create new node
-		curr=make_shared<node<T>>(value);
-		if(left)
-			previous->left=curr;
-		else
-			previous->right=curr;
-	}
-}
-
-
-
-template<class T>
-void bst_fromPreorder(shared_ptr<node<T>> &root,int preorder[],int n){
-	root=make_shared<node<T>>(preorder[0]);
-	
-	for(int i=1;i<n;i++){
-		cout<<"insert "<<preorder[i]<<endl;
-		insert(root,preorder[i]);			
-		cout<<"------------------------"<<endl<<endl;				
-	}
-}
 
 int index;
-template<class T> //no need to track min allowed because of BST property
+template<class T> //no need to track min allowed because of BST property (may be for post order is opposite?)
 void bst_fromPreorder_faster(shared_ptr<node<T>>  &curr,int preorder[],int n,shared_ptr<node<T>>  &previous, bool went_left,int maxAllowed){
 	
 	
@@ -109,8 +72,7 @@ int main(){
 	
 	shared_ptr<node<int>> root; 
 	
-	//bst_fromPreorder(root,preorder,n);
-	
+
 	index=0;
 	root=make_shared<node<int>>(preorder[index++]);
 	shared_ptr<node<int>> shared_null;
@@ -119,11 +81,25 @@ int main(){
 	bst_fromPreorder_faster(root,preorder,n,shared_null,false,big);
 	cout<<"reached "<<index<<"/"<<n<<endl;
 	
-	cout<<"Preorder"<<endl;
-	print_BST_preorder(root);
+	//cout<<"Preorder"<<endl;
+	//print_BST_preorder(root);
 
-
-
+	typedef shared_ptr<node<int>> treenode;
+	
+	treenode tmp;
+	
+	stack<treenode> s;
+	s.push(root);
+	while(!s.empty()){
+		tmp=s.top();
+		s.pop();
+		if(tmp!=nullptr)
+			cout<<"Val: "<<tmp->value<<endl;
+		if(tmp->right!=nullptr)
+			s.push(tmp->right);
+		if(tmp->left!=nullptr)
+			s.push(tmp->left);
+	}
 
 
 
@@ -132,3 +108,25 @@ int main(){
 
 	return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

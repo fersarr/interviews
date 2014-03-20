@@ -1,5 +1,6 @@
 #include <iostream>
 #include <memory>
+#include <algorithm>
 using namespace std;
 
 //implement a queue API using an array
@@ -42,12 +43,25 @@ class queue{
 		void pop(){
 			if(inside>0 && head<size){
 				inside--;
-				head++;
+				elements[head++]=0;//as if 0==empty
 			}
 		}
 	
 		void push(T value){
+			
+			/*
+			cout<<"queue state "<<endl;
+			for(int i=0;i<size;i++){
+				cout<<elements[i]<<" ";
+			cout<<endl<<endl;
+			}*/
+			
 			if(inside<size){
+				if(tail==size){//rotate the elements so all they array space is used. Empty spaces from beggining to head-1 go at the end
+					rotate(elements,elements+head,elements+size);
+					head=0;
+					tail=inside;
+				}
 				elements[tail++]=value;
 				inside++;
 			}
@@ -80,9 +94,12 @@ int main(){
 	q.pop();			 //remove 9
 	cout<<q.top()<<endl; //print 5
 	q.pop();
-	cout<<q.top()<<endl; //empty -> -1
+	//cout<<q.top()<<endl; //empty -> -1
 
-
+	q.push(3);q.push(4);q.push(5);
+	q.push(3);q.push(4);q.push(5);
+	q.push(3);q.push(4);q.push(5);
+	q.push(3);q.push(4);q.push(5);
 
 
 

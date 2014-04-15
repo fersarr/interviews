@@ -24,10 +24,10 @@ int main()
 	
 	
 	
-	//rotate in place
+	//2D rotate in place
 	
-	for(int i=0;i<MAX/2;i++){
-		for(int j=i;j<MAX-1-i;j++){
+	for(int i=0;i<MAX/2;i++){ //half the rows
+		for(int j=i;j<MAX-1-i;j++){ //columns each time one less
 			int tmp=array[i][j];
 			array[i][j]=array[MAX-1-j][i];
 			array[MAX-1-j][i]=array[MAX-1-i][MAX-1-j];

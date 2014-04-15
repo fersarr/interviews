@@ -17,6 +17,7 @@ int setCounter;
 int printSet[MAX];
 
 
+//set power set
 void dfs(int index,int lowestAllowed){
 	
 	for(int i=0;i<index;i++){

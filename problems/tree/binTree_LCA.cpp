@@ -6,7 +6,7 @@ using namespace std;
 
 //given inorder and preorder(or postorder) traversal, reconstruct the binary tree
 //to find the LCA of two given nodes a & b
-
+//time complexity O(n) -> its a good time since binary tree is not sorted we can't use elimination algorithm
 
 #define INIT 42
 template<class T>
